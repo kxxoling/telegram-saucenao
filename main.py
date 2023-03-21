@@ -121,6 +121,8 @@ if __name__ == "__main__":
     while True:
         try:
             bot.polling(none_stop=True)
+        except KeyboardInterrupt as ex:
+            exit()
         except Exception as ex:
             text = f"[{type(ex).__name__}] in bot.polling(): {str(ex)}"
             logger.error(text)
