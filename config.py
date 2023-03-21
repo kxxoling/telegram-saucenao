@@ -1,8 +1,10 @@
-tgBotToken = "TELEGRAM BOT TOKEN"  # bot token from t.me/BotFather
-saucenao_tkn = "SAUCENAO TOKEN"  # saucenao token from saucenao.com
-output_type = "2"
+import os
+
+tgBotToken = os.environ.get('TG_BOT_TOKEN') # bot token from t.me/BotFather
+saucenao_token = os.environ.get('SAUCENAO_TOKEN')  # saucenao token from saucenao.com
+output_type = 2
 numres = 10
-minsim = "70!"
+min_similarity = 70
 
 dbmask = 34359738367  # set dbmask = "" if you want to configure bits manually
 bits = {

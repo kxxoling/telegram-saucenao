@@ -1,15 +1,14 @@
 # Made by @alcortazzo
 # v0.5
 
+import logging
 import os
 import time
-import config
-import logging
+
 from telebot import TeleBot, types
 
-from telegram_saucenao import media_processing
-from telegram_saucenao import api_requests
-
+import config
+from telegram_saucenao import api_requests, media_processing
 
 bot = TeleBot(config.tgBotToken)
 
@@ -46,15 +45,21 @@ def msg_media(message):
         markup = types.InlineKeyboardMarkup()
         buttons = []
         for url in result["urls"]:
-            if url["url"] and url["source"] and url["similarity"]:
+            if (url["url"] or url["source"]) and url["similarity"]:
                 buttons.append(
                     types.InlineKeyboardButton(
-                        text=f"{url['source']} - {url['similarity']}%", url=url["url"]
+                        text=f"{url['source'] or 'UNKNOWN'} - {url['similarity']}%", url=url["url"]
                     )
                 )
-        markup.add(buttons[0])
-        if len(buttons) > 1:
-            markup.row(buttons[1], buttons[2])
+        if buttons:
+            markup.add(buttons[0])
+            for i in range(1, len(buttons), 2):
+                if i+1 < len(buttons):
+                    print('markup add row buttons', i, i+1)
+                    markup.row(buttons[i], buttons[i+1])
+                else:
+                    print('markup add row buttons', i)
+                    markup.add(buttons[i])
 
         bot.send_message(
             message.chat.id,

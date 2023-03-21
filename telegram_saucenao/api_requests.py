@@ -1,5 +1,6 @@
-import config
 import requests
+
+import config
 
 
 class ApiRequest:
@@ -15,13 +16,13 @@ class ApiRequest:
     def get_result(self, files):
         url = (
             f"http://saucenao.com/search.php?output_type={config.output_type}"
-            f"&numres={config.numres}&minsim={config.minsim}"
-            f"&dbmask={self.bitmask}&api_key={config.saucenao_tkn}"
+            f"&numres={config.numres}"
+            f"&dbmask={self.bitmask}&api_key={config.saucenao_token}"
         )
         result = requests.post(url, files=files)
-        return self.parse_result(result.json())
+        return self.parse_result(result.json(), config.min_similarity)
 
-    def parse_result(self, result):
+    def parse_result(self, result, min_similarity: float):
         # name = part = year = time = url = pic = sim = char = mat = ""
         name = part = year = time = ""
         urls = []
@@ -40,6 +41,8 @@ class ApiRequest:
 
         if "results" in result and len(result["results"]) >= 1:
             for case in result["results"]:
+                if float(case['header']['similarity']) < min_similarity:
+                    continue
                 # name = part = year = time = url = pic = sim = char = mat = ""
                 url_data = {"url": "", "source": "", "similarity": ""}
 
