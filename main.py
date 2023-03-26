@@ -29,6 +29,39 @@ def cmd_start(message):
     send_messages()
 
 
+def guess_source_from_url(url: str):
+    """
+    "DeviantArt": "da_id",  # https://deviantart.com/view/515715132
+    "Pixiv": "pixiv_id",  # https://www.pixiv.net/member_illust.php?mode=medium&illust_id=4933944
+    "Anidb": "anidb_aid",  # https://anidb.net/anime/15341
+    "Furaffinity": "fa_id",  # https://www.furaffinity.net/view/38849036
+    "Twitter": "tweet_id",  # https://twitter.com/i/web/status/742497834117668864
+    "bcy": "bcy_id",  # https://bcy.net/illust/detail/55206
+    "FurryNetwork": "fn_id",  # https://furrynetwork.com/artwork/103663
+    "Pawoo": "pawoo_id",  # https://pawoo.net/@nez_ebi
+    "seiga": "seiga_id",  # https://seiga.nicovideo.jp/seiga/im3917445
+    "Sankaku": "sankaku_id",  # https://chan.sankakucomplex.com/post/show/1065498
+    """
+    sites = {
+        'https://www.pixiv.net': 'pixiv',
+        'https://deviantart.com': 'DeviantArt',
+        'https://www.anidb.net': 'Anidb',
+        'https://www.furaffinity.net': 'Furaffinity',
+        'https://twitter.com': 'Twitter',
+        'https://bcy.net': 'bcy',
+        'https://pawoo.net': 'Pawoo',
+        'https://seiga.nicovideo.jp': 'Seiga',
+        'https://chan.sankakucomplex.com': 'Sankaku',
+        'https://gelbooru.com': 'Gelbooru',
+        'https://anime-pictures.net': 'AnimePictures',
+    }
+
+    for site in sites:
+        if url.startswith(site):
+            return sites[site]
+    return 'UNKNOWN'
+
+
 @bot.message_handler(content_types=["photo"])
 def msg_media(message):
     def send_results(result):
@@ -48,7 +81,7 @@ def msg_media(message):
             if (url["url"] or url["source"]) and url["similarity"]:
                 buttons.append(
                     types.InlineKeyboardButton(
-                        text=f"{url['source'] or 'UNKNOWN'} - {url['similarity']}%", url=url["url"]
+                        text=f"{url['source'] or guess_source_from_url(url['url'])} - {url['similarity']}%", url=url["url"]
                     )
                 )
         if buttons:
