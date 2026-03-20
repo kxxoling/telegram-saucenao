@@ -1,8 +1,7 @@
 services:
   telegram-saucenao: # rename it if your like
     restart: unless-stopped
-    build: .
-    image: kxxoling/telegram-saucenao
+    image: kxxoling/telegram-saucenao:${APP_VERSION:-latest}
     environment:
       - SAUCENAO_TOKEN=${SAUCENAO_TOKEN}
       - TG_BOT_TOKEN=${TG_BOT_TOKEN}
