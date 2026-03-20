@@ -9,3 +9,8 @@ dependencies = [
     "pytelegrambotapi>=4.32.0",
     "requests>=2.32.5",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
