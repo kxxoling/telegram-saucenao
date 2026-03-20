@@ -1,9 +1,9 @@
-version: '3.8'
 services:
-  telegram-saucenao:  # rename it if your like
+  telegram-saucenao: # rename it if your like
     restart: unless-stopped
+    build: .
     image: kxxoling/telegram-saucenao
     environment:
-      - SAUCENAO_TOKEN=your-token
-      - TG_BOT_TOKEN=your-token
-    container_name: telegram-saucenao  # rename it if your like
+      - SAUCENAO_TOKEN=${SAUCENAO_TOKEN}
+      - TG_BOT_TOKEN=${TG_BOT_TOKEN}
+    container_name: telegram-saucenao # rename it if your like

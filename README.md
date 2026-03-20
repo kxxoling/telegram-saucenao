@@ -5,7 +5,7 @@ Telegram-SauceNAO is a Telegram chatbot that uses the SauceNAO image recognition
 ## Installation
 
 1. Clone the repository: `git clone https://github.com/kxxoling/Telegram-SauceNAO.git`
-2. Install dependencies: `pip install -r requirements.txt`
+2. Install dependencies: `uv sync`
 3. Create a new Telegram bot and obtain the API token.
 4. Create a SauceNAO account and obtain the API key.
 5. Export envs like this:
@@ -15,7 +15,7 @@ export TG_BOT_TOKEN=<your_telegram_bot_token>
 export SAUCENAO_TOKEN=<your_saucenao_token>
 ```
 
-6. Start the bot: `python main.py`
+6. Start the bot: `uv run python main.py`
 
 ## Usage
 
