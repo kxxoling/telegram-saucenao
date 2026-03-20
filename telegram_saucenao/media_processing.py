@@ -33,7 +33,7 @@ class MediaFile:
 
         image = Image.open(file_path)
         image = image.convert("RGB")
-        image.thumbnail(thumb_size, resample=Image.ANTIALIAS)
+        image.thumbnail(thumb_size, resample=Image.Resampling.LANCZOS)
         image_data = io.BytesIO()
         image.save(image_data, format="PNG")
         files = {"file": (f"{self.file_name}.png", image_data.getvalue())}
